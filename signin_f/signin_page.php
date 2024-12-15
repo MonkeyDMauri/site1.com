@@ -6,6 +6,10 @@
     <title>Signin</title>
 </head>
 <body>
-    <h1>Hellow world!!!</h1>
+    <div class="signin-wrapper">
+        <div class="signin-wrap">
+            <h1>Sign In</h1>
+        </div>
+    </div>
 </body>
 </html>
