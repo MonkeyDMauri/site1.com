@@ -1,3 +1,8 @@
+<?php
+require_once "../backend/general/session.conf.php";
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
