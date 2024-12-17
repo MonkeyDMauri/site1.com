@@ -1,0 +1,56 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+body {
+    margin: 0;
+    font-family: "Roboto", serif;
+    font-weight: 100;
+    font-style: normal;
+}
+
+/*signin*/
+
+.logo {
+    text-align: center;
+    font-size: 3rem;
+    color: rgb(89, 89, 233);
+}
+
+.signin-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.signin-wrap {
+    box-shadow: 0px 2px 4px rgb(0, 0, 0, 0.6);
+    padding: 2rem 3rem;
+    border-radius: .5rem;
+}
+
+/*form*/
+
+.form-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-wrap input{
+    font-size: 1.3rem;
+    padding: .3rem;
+    border-radius: .5rem;
+}
+
+.signin-btn-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.signin-btn {
+    font-size: 1.3rem;
+    color: aliceblue;
+    background-color: rgb(89, 89, 233);
+    padding: .5rem 1rem;
+    border-radius: .5rem;
+    border: none;
+}
