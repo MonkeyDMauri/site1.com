@@ -18,7 +18,7 @@ require_once "../backend/general/session.conf.php";
             <div class="signin-wrap">
                 <h1 style="text-align: center;">Sign In</h1>
                 <p style="text-align: center; font-weight:400;">create your Maubook account!</p>
-                <form action="" method="POST">
+                <form action="../backend/signin_backend/signin.php" method="POST">
                     <div class="form-wrap">
                         <input type="text" name="username" placeholder="Username">
                         <input type="text" name="email" placeholder="E-mail ">
