@@ -9,6 +9,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         require_once "../general/dbh.php";
         require_once "../general/session.conf.php";
         require_once "signin_contr.php";
+        require_once "signin_model.php";
+        require_once "signin_view.php";
         //error handlers
         $errors = [];
 
@@ -16,8 +18,22 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $errors["missing_input"] = "Please fillout al fields"; 
         }
 
+        if ($email && invalid_email($email)) {
+            $errors["invalid_email"] = "invalid email format";    
+        }
+        
+
+        if ($username && username_taken($pdo, $username)) {
+            $errors["username_taken"] = "username already taken";
+        }
+
+        if ($pwd && short_pwd($pwd)) {
+            $errors["password_too_short"] = "Password must be at least 4 characters long";
+        }
+
         if ($errors) {
-            echo "missing input";
+            $_SESSION["signin_errors"] = $errors;
+            header("location: ../../signin_f/signin_page.php");
             die();
         }
 

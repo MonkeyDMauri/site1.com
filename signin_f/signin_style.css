@@ -54,3 +54,7 @@ body {
     border-radius: .5rem;
     border: none;
 }
+
+.mssg-wrap {
+    text-align: center;
+}

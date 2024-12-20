@@ -1,7 +1,7 @@
 <?php
 require_once "../backend/general/session.conf.php";
+require_once "../backend/signin_backend/signin_view.php";
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -28,6 +28,11 @@ require_once "../backend/general/session.conf.php";
                         </div>
                     </div>
                 </form>
+            </div>
+            <div class="mssg-wrap">
+                <?php
+                    check_errors();
+                ?>
             </div>
         </div>
     </div>
