@@ -27,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $errors["username_taken"] = "username already taken";
         }
 
-        if ($pwd && short_pwd($pwd)) {
+        if (!missing_input($username, $pwd, $email) && $pwd && short_pwd($pwd)) {
             $errors["password_too_short"] = "Password must be at least 4 characters long";
         }
 
@@ -37,7 +37,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             die();
         }
 
-        echo "no errors";
+        // if no errors then we will store information in database.
+        save_account($pdo, $username, $pwd, $email);
+
+        header("location: ../../signin_f/signin_page.php?account_created=true");
     } catch(PDOException $e) {
         die("Error in signin_php: " . $e->getMessage());
     }

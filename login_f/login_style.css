@@ -68,12 +68,12 @@ body {
     color: red;
 }
 
-.already_have_an_account_link {
+.dont_have_an_account_link {
     text-align: center;
     margin: 0;
     font-weight: 400;
 }
 
-.already_have_an_account_link a {
+.dont_have_an_account_link a {
     text-decoration: none;
 }

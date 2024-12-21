@@ -10,6 +10,7 @@ require_once "../backend/signin_backend/signin_view.php";
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Signin</title>
     <link rel="stylesheet" href="signin_style.css">
+    <link rel="stylesheet" href="signin_media.css">
 </head>
 <body>
     <div class="signin-wrapper">
@@ -26,6 +27,7 @@ require_once "../backend/signin_backend/signin_view.php";
                         <div class="signin-btn-wrapper">
                             <button type="submit" class="signin-btn">Signin</button>
                         </div>
+                        <p class="already_have_an_account_link"><a href="../login_f/login_page.php">Already have an account?</a></p>
                     </div>
                 </form>
             </div>

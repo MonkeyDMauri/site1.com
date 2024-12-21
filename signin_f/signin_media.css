@@ -1,0 +1,19 @@
+
+/* MY PHONE */
+@media (max-width: 400px) {
+    .form-wrap input{
+        font-size: 1.2rem;
+        padding: .3rem;
+        border-radius: .5rem;
+        width: 200px;
+    }
+
+    .form-wrap {
+        align-items: center;
+        padding: .5rem;
+    }
+
+    .signin-wrap {
+        padding: 1rem 2rem;
+    }
+}

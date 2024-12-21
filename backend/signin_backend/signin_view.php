@@ -9,5 +9,8 @@ function check_errors() {
         }
 
         unset($_SESSION["signin_errors"]);
+    } else if (isset($_GET["account_created"]) && $_GET["account_created"] === "true") {
+        echo "<div>Account created successfully!</div>";
+
     }
 }
