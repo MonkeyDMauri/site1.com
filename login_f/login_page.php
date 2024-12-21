@@ -1,3 +1,8 @@
+<?php
+require_once "../backend/general/session.conf.php";
+require_once "../backend/login_backend/login_view.php";
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,11 +24,16 @@
                         <input type="text" name="username" placeholder="Username">
                         <input type="password" name="pwd" placeholder="Password">
                         <div class="signin-btn-wrapper">
-                            <button type="submit" class="signin-btn">Login</button>
+                            <button class="signin-btn">Login</button>
                         </div>
                         <p class="dont_have_an_account_link"><a href="../signin_f/signin_page.php">Already have an account?</a></p>
                     </div>
                 </form>
+            </div>
+            <div class="mssg-wrap">
+                <?php
+                    check_errors();
+                ?>
             </div>
         </div>
     </div>
