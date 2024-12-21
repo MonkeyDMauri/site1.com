@@ -19,12 +19,14 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    gap: 2rem;
 }
 
 .signin-wrap {
     box-shadow: 0px 2px 4px rgb(0, 0, 0, 0.6);
     padding: 2rem 3rem;
     border-radius: .5rem;
+    position: relative;
 }
 
 /*form*/
@@ -76,4 +78,46 @@ body {
 
 .dont_have_an_account_link a {
     text-decoration: none;
+}
+
+/*dropdown*/
+
+.php-img-wrap {
+    position: absolute;
+    top: 0;
+    right: -56px;
+}
+
+.dropdown {
+    position: relative;
+}
+
+.dropdown-menu {
+    position: absolute;
+    left: 0;
+    top: calc(100% + .5rem);
+
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-20px);
+
+    transition: opacity 300ms ease-in-out, transform 300ms ease-in-out;
+    
+}
+
+.dropdown.active > .dropdown-menu{
+    opacity:1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.img-wrap {
+    box-shadow: 0px 2px 2px rgb(0, 0, 0, 0.6);
+    padding: .5rem;
+    border-radius: .5rem;
+}
+
+.php-img {
+    height: 40px;
+    cursor: pointer;
 }

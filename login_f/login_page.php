@@ -11,6 +11,7 @@ require_once "../backend/login_backend/login_view.php";
     <title>Login</title>
     <link rel="stylesheet" href="./login_style.css">
     <link rel="stylesheet" href="./login_media.css">
+    <script src="./login_script.js" defer></script>
 </head>
 <body>
 <div class="signin-wrapper">
@@ -29,12 +30,24 @@ require_once "../backend/login_backend/login_view.php";
                         <p class="dont_have_an_account_link"><a href="../signin_f/signin_page.php">Already have an account?</a></p>
                     </div>
                 </form>
+
+                <div class="php-img-wrap">
+                    <div class="dropdown">
+                        <div class="img-wrap">
+                            <img src="../pics/php-logo-24.png" class="php-img" alt="php logo">
+                        </div>
+                        <div class="dropdown-menu">
+                            <h2 style="margin:0;"> Test Dropdown Content</div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
-            <div class="mssg-wrap">
-                <?php
-                    check_errors();
-                ?>
-            </div>
+        </div>
+        <div class="mssg-wrap">
+            <?php
+                check_errors();
+            ?>
         </div>
     </div>
 </body>
