@@ -1,0 +1,49 @@
+
+@font-face {
+    font-family: myFont;
+    src: url(./chat_pics/ui/fonts/Summer-Vibes-OTF.otf);
+}
+
+.wrapper {
+    max-width: 900px;
+    min-height: 500px;
+    display: flex;
+    margin: auto;
+    color: white;
+    
+}
+
+.left-pannel {
+    min-height: 500px;
+    background-color: #27344b;
+    flex: 1;
+}
+
+.right-pannel {
+    min-height: 500px;
+    flex: 4;
+}
+
+.header {
+    font-family: myFont;
+    background-color: #485b6c;
+    height: 70px;
+    font-size: 40px;
+    text-align: center;
+}
+
+.containe {
+    display: flex;
+}
+
+.inner-left-pannel {
+    background-color: #383e48;
+    flex: 1;
+    min-height: 430px;
+}
+
+.inner-right-pannel {
+    background-color: #f2f7f8;
+    flex: 2;
+    min-height: 430px;
+}
