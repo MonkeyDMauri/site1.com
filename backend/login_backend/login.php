@@ -35,10 +35,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             die();
         }
 
-        echo "login";
-        echo $user["username"];
-        echo $user["email"];
-        echo $user["pwd"];
+        // if no errors and verification is succesful, user will be sent to
+        // chat page.
+
+        header("location: ../../chat_f/chat_page.php");
     } catch(PDOException $e) {
         echo "error";
         die("Error in /backend/login_backend/login.php" . $e->getMessage());
