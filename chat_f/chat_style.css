@@ -1,5 +1,10 @@
 
 @font-face {
+    font-family: profile-font;
+    src: url(./chat_pics/ui/fonts/OpenSans-Regular.ttf);
+}
+
+@font-face {
     font-family: myFont;
     src: url(./chat_pics/ui/fonts/Summer-Vibes-OTF.otf);
 }
@@ -10,6 +15,7 @@
     display: flex;
     margin: auto;
     color: white;
+    font-size: 13px;
     
 }
 
@@ -17,11 +23,40 @@
     min-height: 500px;
     background-color: #27344b;
     flex: 1;
+    text-align: center;
+    font-family: profile-font;
+}
+
+.profile-img {
+    width: 50%;
+    border: solid thin white;
+    border-radius: 50%;
+}
+
+.left-pannel label {
+    width: 100%;
+    height: 20px;
+    display: block;
+    background-color: #404b56;
+    border-bottom: solid thin #ffffff55;
+    cursor: pointer;
+    padding: .5rem;
+    transition: all 0.5s ease;
+}
+
+.left-pannel label:hover {
+   background-color: #8e9192;
+}
+
+.left-pannel label img {
+    float: right;
+    width: 25px;
 }
 
 .right-pannel {
     min-height: 500px;
     flex: 4;
+    text-align: center;
 }
 
 .header {
