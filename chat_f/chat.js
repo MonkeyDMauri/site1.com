@@ -32,3 +32,29 @@ function show_user_info() {
 }
 
 show_user_info();
+
+//logout code.
+
+document.querySelector(".logout-btn").addEventListener("click", logout);
+
+function logout() {
+    // sending fetch request to PHP file that will destroy session.
+    fetch("../../backend/general/logout.php")
+    .then(res => {
+        if(!res.ok) {
+            throw new Error("Network response was not successful");
+        } else{ 
+            return res.json();
+        }
+    })
+    .then(data => {
+        // if logout is successful we send user back to the login page.
+        if (data.success) {
+            window.location.href ="../../login_f/login_page.php";
+            die();
+        }
+    })
+    .catch(err => {
+        console.error("Error when login out ", err.message);
+    })
+}

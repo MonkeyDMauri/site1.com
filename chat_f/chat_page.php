@@ -13,9 +13,9 @@
             <div style="padding:1rem;">
                 <img class="profile-img" src="./chat_pics/ui/images/user3.jpg" alt="user 3">
                 <br><br>
-                <div class="username-wrap" style="font-size:1.3rem;"></div>
+                <div class="username-wrap" style="font-size:1.3rem;">Username</div>
                 <br>
-                <div class="email-wrap" style="opacity:0.5; margin:0; font-size:1rem"></div>
+                <div class="email-wrap" style="opacity:0.5; margin:0; font-size:1rem">Email</div>
                 <br><br><br>
                 <div>
                     <label class="label-chat" for="radio-chat">Chat
@@ -27,6 +27,10 @@
                     <label class="label-settings" for="radio-settings">Settings
                         <img src="./chat_pics/ui/icons/settings.png" alt="settings img">
                     </label>
+                </div>
+
+                <div class="logout-btn-wrap">
+                    <button class="logout-btn">Logout</button>
                 </div>
             </div>
         </div>
@@ -43,6 +47,10 @@
                 <div class="inner-right-pannel"></div>
             </div>
         </div>
+    </div>
+
+    <div class="logout-popup-wrapper">
+        <div class="logout-wrap">popup</div>
     </div>
 </body>
 </html>
