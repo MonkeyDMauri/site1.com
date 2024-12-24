@@ -5,16 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Chat</title>
     <link rel="stylesheet" href="./chat_style.css">
+    <script src="./chat.js" defer></script>
 </head>
 <body>
     <div class="wrapper">
         <div class="left-pannel">
             <div style="padding:1rem;">
                 <img class="profile-img" src="./chat_pics/ui/images/user3.jpg" alt="user 3">
+                <br><br>
+                <div class="username-wrap" style="font-size:1.3rem;"></div>
                 <br>
-                Kelly Hoftstader
-                <br>
-                <div style="opacity:0.5;">Kelly.hoftstader@gmail.com</div>
+                <div class="email-wrap" style="opacity:0.5; margin:0; font-size:1rem"></div>
                 <br><br><br>
                 <div>
                     <label class="label-chat" for="radio-chat">Chat

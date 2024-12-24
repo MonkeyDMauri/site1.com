@@ -37,7 +37,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         // if no errors and verification is succesful, user will be sent to
         // chat page.
-
+        $_SESSION["user_username"] = htmlspecialchars($username);
+        $_SESSION["user_email"] = htmlspecialchars($email);
         header("location: ../../chat_f/chat_page.php");
     } catch(PDOException $e) {
         echo "error";
