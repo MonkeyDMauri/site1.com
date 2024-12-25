@@ -1,3 +1,13 @@
+<?php
+require_once "../backend/general/session.conf.php";
+
+if (!isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] !== true) {
+    header("location: ../../login_f/login_page.php");
+    die();
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,10 +37,7 @@
                     <label class="label-settings" for="radio-settings">Settings
                         <img src="./chat_pics/ui/icons/settings.png" alt="settings img">
                     </label>
-                </div>
-
-                <div class="logout-btn-wrap">
-                    <button class="logout-btn">Logout</button>
+                    <label class="logout-btn">Logout</label>                    
                 </div>
             </div>
         </div>
@@ -50,7 +57,13 @@
     </div>
 
     <div class="logout-popup-wrapper">
-        <div class="logout-wrap">popup</div>
+        <div class="logout-wrap">
+            <h2>Dou you want to logout?</h2>
+            <div class="btn-wrapper">
+                <button class="btn btn-no">No</button>
+                <button class="btn btn-yes">Yes</button>
+            </div>
+        </div>
     </div>
 </body>
 </html>

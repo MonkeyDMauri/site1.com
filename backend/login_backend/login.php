@@ -39,6 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         // chat page.
         $_SESSION["user_username"] = htmlspecialchars($username);
         $_SESSION["user_email"] = htmlspecialchars($email);
+        $_SESSION["logged_in"] = true;
         header("location: ../../chat_f/chat_page.php");
     } catch(PDOException $e) {
         echo "error";

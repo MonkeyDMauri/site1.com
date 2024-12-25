@@ -33,9 +33,28 @@ function show_user_info() {
 
 show_user_info();
 
-//logout code.
+//LOGOUT CODE.
 
-document.querySelector(".logout-btn").addEventListener("click", logout);
+// if user clicks the logout button then
+// the logout popup will appear.
+document.querySelector(".logout-btn").addEventListener("click", showLogoutPopup);
+
+// if user clicks outsite the element with the buttons or the "No" button then
+// the logout popup will disappear.
+document.addEventListener("click", e => {
+    if (e.target.matches(".logout-popup-wrapper") || e.target.matches(".btn-no")) {
+        showLogoutPopup();
+    }
+});
+
+//if user clicks the "yes" button, they will be logged out.
+
+document.querySelector(".btn-yes").addEventListener("click", logout);
+
+function showLogoutPopup() {
+    const logoutPopup = _(".logout-popup-wrapper");
+    logoutPopup.classList.toggle("active");
+}
 
 function logout() {
     // sending fetch request to PHP file that will destroy session.
