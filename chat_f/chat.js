@@ -77,6 +77,22 @@ function logout() {
     })
 }
 
+// CHAT CODE
+
+document.addEventListener("click", e => {
+    if (e.target.matches("#radio-chat")) {
+        showChats();
+    }
+})
+
+function showChats() {
+    const innerLeftPanel = _(".inner-left-pannel");
+    innerLeftPanel.innerHTML = `
+        <div>Chat</div>
+    `;
+
+}
+
 
 // GET CONTACTS CODE.
 
@@ -86,7 +102,10 @@ const contacts_btn = _("#radio-contacts");
 contacts_btn.addEventListener("click", get_contacts);
 
 async function get_contacts() {
-    console.log("contacts");
+    const innerLeftPanel = _(".inner-left-pannel");
+    innerLeftPanel.innerHTML = `
+        <div class="contacts-wrapper" style="text-align: center;"></div>
+    `;
 
     // Get current username.
     const username = _(".username-wrap").textContent;
@@ -94,6 +113,10 @@ async function get_contacts() {
     const jsonData = { "username": username };
 
     try {
+        // load gif on.
+        const loader = _(".loader");
+        loader.classList.toggle("active");
+
         // Send fetch request.
         const res = await fetch("../../backend/chat_backend/get_contacts.php", {
             method: "POST",
@@ -111,6 +134,9 @@ async function get_contacts() {
             console.log("Contacts fetched: ", data.result);
             // allContacts = Array.isArray(data.result) ? data.result : [];
             allContacts = data.result;
+
+            // load gif off.
+            loader.classList.toggle("active");
             displayContacts(allContacts);
         } else {
             // If no data is received, display a message in the contacts panel.
@@ -146,4 +172,20 @@ function displayContacts(contacts) {
 
 
     
+}
+
+// SETTINGS CODE
+
+document.addEventListener("click", e => {
+    if (e.target.matches("#radio-settings")) {
+        showSettings();
+    }
+})
+
+function showSettings() {
+    const innerLeftPanel = _(".inner-left-pannel");
+    innerLeftPanel.innerHTML = `
+        <div class="settings-wrapper">Settings go here</div>
+    `;
+
 }

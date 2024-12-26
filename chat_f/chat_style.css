@@ -65,6 +65,7 @@
     height: 70px;
     font-size: 40px;
     text-align: center;
+    position: relative;
 }
 
 .containe {
@@ -167,4 +168,21 @@
 
 .contact img{
     width: 100%;
+}
+
+/*LOADER ANIMATION*/
+
+
+.loader {
+    display: none;
+    position: absolute;
+    top: 200px;
+    left: 300px;
+    padding: 0.5rem;
+    width: 100%;
+    /* background-color: black; */
+}
+
+.loader.active {
+    display: flex;
 }

@@ -42,13 +42,18 @@ if (!isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] !== true) {
             </div>
         </div>
         <div class="right-pannel">
-            <div class="header">My Chat</div>
-            <div class="containe">
+            <div class="header">
+                <div class="loader">
+                    <img src="./chat_pics/ui/icons/giphy.gif" alt="loading gif" style="width: 110px;">
+                </div>    
+                My Chat
+            </div>
+            <div class="containe" style="display:flex;">
+
+                
 
                 <div class="inner-left-pannel">
-                    <div class="contacts-wrapper" style="text-align: center;">
-                        
-                    </div>
+
                 </div>
 
                 <input type="radio" id="radio-chat" name="box" style="display:none;">
