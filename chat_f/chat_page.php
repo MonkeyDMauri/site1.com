@@ -21,7 +21,7 @@ if (!isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] !== true) {
     <div class="wrapper">
         <div class="left-pannel">
             <div style="padding:1rem;">
-                <img class="profile-img" src="./chat_pics/ui/images/user3.jpg" alt="user 3">
+                <img class="profile-img" src="./chat_pics/ui/images/luffy-profile.png" alt="user 3">
                 <br><br>
                 <div class="username-wrap" style="font-size:1.3rem;">Username</div>
                 <br>
@@ -45,7 +45,11 @@ if (!isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] !== true) {
             <div class="header">My Chat</div>
             <div class="containe">
 
-                <div class="inner-left-pannel"></div>
+                <div class="inner-left-pannel">
+                    <div style="text-align: center;">
+                        
+                    </div>
+                </div>
 
                 <input type="radio" id="radio-chat" name="box" style="display:none;">
                 <input type="radio" id="radio-contacts" name="box" style="display:none;">

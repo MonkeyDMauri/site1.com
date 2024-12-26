@@ -77,3 +77,48 @@ function logout() {
         console.error("Error when login out ", err.message);
     })
 }
+
+
+// GET CONTACTS CODE.
+
+let allContacts = [];
+
+const contacts_btn = _("#radio-contacts");
+contacts_btn.addEventListener("click", get_contacts);
+
+function get_contacts() {
+    console.log("contacts");
+
+    //get current username.
+    const username = _(".username-wrap").textContent;
+
+    const jsonData = {
+        "username" : username
+    }
+
+    fetch("../../backend/chat_backend/get_contacts.php", {
+        method: "POST",
+        headers: {
+            "Content-Type" : "application/json"
+        },
+        body: JSON.stringify(jsonData)
+    })
+    .then(res => {
+        if(!res.ok) {
+            throw new Error("Network conection was not successful");
+        } else {
+            return res.json();
+        }
+    })
+    .then(data => {
+        if (data.success) {
+            console.log(data.result);
+            allContacts = data.result;
+        } else {
+            console.log(data.error);
+        }
+    })
+    .catch(err => {
+        console.error("error ", err.message);
+    })
+}
