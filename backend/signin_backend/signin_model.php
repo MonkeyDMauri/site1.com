@@ -26,10 +26,10 @@ function get_username($pdo, $username){
  
 }
 
-function save_account($pdo, $username, $pwd, $email) {
+function save_account($pdo, $username, $pwd, $email, $gender) {
 
    // MySQL query to insert data into the users table.
-   $query = "INSERT INTO users(username, pwd, email) VALUES(:username, :pwd, :email);";
+   $query = "INSERT INTO users(username, gender, pwd, email) VALUES(:username, :gender, :pwd, :email);";
 
    // creating cursor to execute mysql queries.
    $stmt = $pdo->prepare($query);
@@ -43,6 +43,7 @@ function save_account($pdo, $username, $pwd, $email) {
 
    // binding placeholder to variables.
    $stmt->bindParam(":username", $username);
+   $stmt->bindParam(":gender", $gender);
    $stmt->bindParam(":pwd", $hashedPwd);
    $stmt->bindParam(":email", $email);
 

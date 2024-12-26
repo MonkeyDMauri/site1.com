@@ -2,6 +2,7 @@
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $username = $_POST["username"];
+    $gender = $_POST["gender"];
     $pwd = $_POST["pwd"];
     $email = $_POST["email"];
 
@@ -38,7 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
 
         // if no errors then we will store information in database.
-        save_account($pdo, $username, $pwd, $email);
+        save_account($pdo, $username, $pwd, $email, $gender);
 
         header("location: ../../signin_f/signin_page.php?account_created=true");
     } catch(PDOException $e) {

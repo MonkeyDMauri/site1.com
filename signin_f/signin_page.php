@@ -23,6 +23,15 @@ require_once "../backend/signin_backend/signin_view.php";
                     <div class="form-wrap">
                         <input type="text" name="username" placeholder="Username">
                         <input type="text" name="email" placeholder="E-mail ">
+                        
+                        <div>
+                            <h2 style="margin:0;">Gender</h2>
+                            <Label>Male</Label>
+                            <input type="radio" name="gender" value="male" checked>
+                            <Label>Female</Label>
+                            <input type="radio" name="gender" value="female">
+                        </div>
+
                         <input type="password" name="pwd" placeholder="Password">
                         <div class="signin-btn-wrapper">
                             <button type="submit" class="signin-btn">Signin</button>

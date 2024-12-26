@@ -136,7 +136,7 @@ function displayContacts(contacts) {
 
         contact.innerHTML = `
         
-            <img src="./chat_pics/ui/images/user1.jpg" alt="user pic">
+            <img src=${con["gender"] === "male" ? "./chat_pics/ui/images/male.jpeg" : "./chat_pics/ui/images/female.jpeg"} alt="user pic">
             <br>
             <div class='contact-name'>${con['username']}</div>
         `;
