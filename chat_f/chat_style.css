@@ -15,7 +15,7 @@
     display: flex;
     margin: auto;
     color: white;
-    font-size: 13px;1
+    font-size: 13px;
     
 }
 
@@ -185,4 +185,42 @@
 
 .loader.active {
     display: flex;
+}
+
+/*SETTINGS STYLING*/
+
+.form-wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-wrap input{
+    font-size: 1.3rem;
+    padding: .3rem;
+    border-radius: .5rem;
+    width: 200px;
+}
+
+.signin-btn-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.signin-btn {
+    font-size: 1.3rem;
+    color: aliceblue;
+    background-color: rgb(89, 89, 233);
+    padding: .5rem 1rem;
+    border-radius: .5rem;
+    border: none;
+}
+.signin-btn:hover {
+    background-color: rgb(57, 57, 201);
+}
+
+input[radio] {
+    margin: 0;
 }

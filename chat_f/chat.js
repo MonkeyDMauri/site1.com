@@ -185,7 +185,35 @@ document.addEventListener("click", e => {
 function showSettings() {
     const innerLeftPanel = _(".inner-left-pannel");
     innerLeftPanel.innerHTML = `
-        <div class="settings-wrapper">Settings go here</div>
+        <div class="signin-wrap">
+            <h1 style="text-align: center;">Sign In</h1>
+            <p style="text-align: center; font-weight:400;">create your Maubook account!</p>
+            <form action="../backend/signin_backend/signin.php" method="POST">
+                <div class="form-wrap">
+                    <input type="text" name="username" placeholder="Username">
+                    <input type="text" name="email" placeholder="E-mail ">
+                        
+                    <div>
+                        <h2 style="margin:0;">Gender</h2>
+                        <div style="display:flex; justify-content:center; width: 50px">
+                            <div>
+                                <Label for="radio-male">Male</Label>
+                                <input type="radio" name="gender" value="male" id="radio-male" checked>
+                            </div>
+                            <div>
+                                <Label for="radio-female">Female</Label>
+                                <input type="radio" name="gender" value="female" id="radio-female">
+                            </div>
+                        </div>
+                    </div>
+
+                    <input type="password" name="pwd" placeholder="Password">
+                    <div class="signin-btn-wrapper">
+                        <button type="submit" class="signin-btn">Save</button>
+                    </div>
+                </div>
+            </form>
+         </div>
     `;
 
 }
