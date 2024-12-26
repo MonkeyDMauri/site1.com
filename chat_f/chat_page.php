@@ -46,7 +46,7 @@ if (!isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] !== true) {
             <div class="containe">
 
                 <div class="inner-left-pannel">
-                    <div style="text-align: center;">
+                    <div class="contacts-wrapper" style="text-align: center;">
                         
                     </div>
                 </div>

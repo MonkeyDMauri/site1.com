@@ -27,7 +27,7 @@ require_once "../backend/login_backend/login_view.php";
                         <div class="signin-btn-wrapper">
                             <button class="signin-btn">Login</button>
                         </div>
-                        <p class="dont_have_an_account_link"><a href="../signin_f/signin_page.php">Already have an account?</a></p>
+                        <p class="dont_have_an_account_link"><a href="../signin_f/signin_page.php">Don't have an account?</a></p>
                     </div>
                 </form>
 

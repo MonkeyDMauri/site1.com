@@ -28,16 +28,24 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmt->execute();
 
 
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+        if ($result) {
+            echo json_encode([
+                "success" => true,
+                "result" => $result
+            ]);
+        } else {
+            echo json_encode([
+                "error" => "No contacts to show"
+            ]);
+        }
 
-
-        echo json_encode([
-            "success" => true,
-            "result" => $result
-        ]);
+        
     }catch(PDOException $e) {
-
+        echo json_encode([
+            "error" => "error when conneting with database " . $e->getMessage()
+        ]);
     }
 
 } else {

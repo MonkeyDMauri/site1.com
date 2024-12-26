@@ -70,7 +70,6 @@ function logout() {
         // if logout is successful we send user back to the login page.
         if (data.success) {
             window.location.href ="../../login_f/login_page.php";
-            die();
         }
     })
     .catch(err => {
@@ -86,39 +85,65 @@ let allContacts = [];
 const contacts_btn = _("#radio-contacts");
 contacts_btn.addEventListener("click", get_contacts);
 
-function get_contacts() {
+async function get_contacts() {
     console.log("contacts");
 
-    //get current username.
+    // Get current username.
     const username = _(".username-wrap").textContent;
 
-    const jsonData = {
-        "username" : username
-    }
+    const jsonData = { "username": username };
 
-    fetch("../../backend/chat_backend/get_contacts.php", {
-        method: "POST",
-        headers: {
-            "Content-Type" : "application/json"
-        },
-        body: JSON.stringify(jsonData)
-    })
-    .then(res => {
-        if(!res.ok) {
-            throw new Error("Network conection was not successful");
-        } else {
-            return res.json();
+    try {
+        // Send fetch request.
+        const res = await fetch("../../backend/chat_backend/get_contacts.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(jsonData),
+        });
+
+        if (!res.ok) {
+            throw new Error("Network connection was not successful");
         }
-    })
-    .then(data => {
+
+        const data = await res.json();
+
         if (data.success) {
-            console.log(data.result);
+            console.log("Contacts fetched: ", data.result);
+            // allContacts = Array.isArray(data.result) ? data.result : [];
             allContacts = data.result;
+            displayContacts(allContacts);
         } else {
+            // If no data is received, display a message in the contacts panel.
             console.log(data.error);
+            const contactsWrapper = _(".contacts-wrapper");
+            contactsWrapper.innerHTML = `No contacts to show`;
         }
-    })
-    .catch(err => {
-        console.error("error ", err.message);
-    })
+    } catch (err) {
+        console.error("Error: ", err.message);
+    }
+}
+
+
+function displayContacts(contacts) {
+    
+    const contactsWrapper = _(".contacts-wrapper");
+    contactsWrapper.innerHTML = ` `;
+
+    contacts.forEach(con => {
+        console.log("display");
+        const contact = document.createElement("div");
+        contact.classList.add("contact");
+
+        contact.innerHTML = `
+        
+            <img src="./chat_pics/ui/images/user1.jpg" alt="user pic">
+            <br>
+            <div class='contact-name'>${con['username']}</div>
+        `;
+
+        contactsWrapper.appendChild(contact);
+    });
+
+
+    
 }
