@@ -189,16 +189,22 @@
 
 /*SETTINGS STYLING*/
 
+.settings-wrapper {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+}
+
 .form-wrap {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 1rem;
 }
 
 .form-wrap input{
-    font-size: 1.3rem;
+    font-size: 1rem;
     padding: .3rem;
     border-radius: .5rem;
     width: 200px;
@@ -210,17 +216,35 @@
 }
 
 .signin-btn {
-    font-size: 1.3rem;
+    font-size: 1rem;
     color: aliceblue;
     background-color: rgb(89, 89, 233);
     padding: .5rem 1rem;
     border-radius: .5rem;
     border: none;
+    cursor: pointer;
 }
 .signin-btn:hover {
     background-color: rgb(57, 57, 201);
 }
 
-input[radio] {
-    margin: 0;
+
+.settings-profile-pic {
+    width: 150px;
+    height: 150px;
+    margin: 2rem;
+}
+
+.change-btn {
+    font-size: 1rem;
+    color: white;
+    background-color: rgb(89, 89, 233);
+    padding: .5rem 1rem;
+    border-radius: .5rem;
+    border: none;
+    cursor: pointer;
+}
+
+.change-btn:hover {
+    background-color: rgb(57, 57, 201);
 }

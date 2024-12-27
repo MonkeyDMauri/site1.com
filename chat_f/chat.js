@@ -185,10 +185,15 @@ document.addEventListener("click", e => {
 function showSettings() {
     const innerLeftPanel = _(".inner-left-pannel");
     innerLeftPanel.innerHTML = `
+    <div class="settings-wrapper">
+
+        <div style="display:flex; flex-direction: column; align-items:center;">
+            <img class="settings-profile-pic" src="./chat_pics/ui/images/male.jpeg">
+            <button class="change-btn">Change Image</button>
+        </div>
         <div class="signin-wrap">
             <h1 style="text-align: center;">Sign In</h1>
-            <p style="text-align: center; font-weight:400;">create your Maubook account!</p>
-            <form action="../backend/signin_backend/signin.php" method="POST">
+            <form action="" method="POST">
                 <div class="form-wrap">
                     <input type="text" name="username" placeholder="Username">
                     <input type="text" name="email" placeholder="E-mail ">
@@ -208,12 +213,14 @@ function showSettings() {
                     </div>
 
                     <input type="password" name="pwd" placeholder="Password">
+                    <input type="password" name="pwd2" placeholder="Retype password">
                     <div class="signin-btn-wrapper">
                         <button type="submit" class="signin-btn">Save</button>
                     </div>
                 </div>
             </form>
          </div>
+    </div>
     `;
 
 }
