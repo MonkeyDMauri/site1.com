@@ -189,11 +189,14 @@ function showSettings() {
 
         <div style="display:flex; flex-direction: column; align-items:center;">
             <img class="settings-profile-pic" src="./chat_pics/ui/images/male.jpeg">
-            <button class="change-btn">Change Image</button>
+            <label for="change-img-input" class="change-btn" style="display:inline-block; text-align:center;">
+                Change Image
+            </label>
+            <input type="file" id="change-img-input" style="display:none;" onchange="upload_image(this.files)">
         </div>
         <div class="signin-wrap">
-            <h1 style="text-align: center;">Sign In</h1>
-            <form action="" method="POST">
+            <h1 style="text-align: center;">Settings</h1>
+            <form action="../../backend/chat_backend/settings.php" method="POST">
                 <div class="form-wrap">
                     <input type="text" name="username" placeholder="Username">
                     <input type="text" name="email" placeholder="E-mail ">
@@ -222,5 +225,19 @@ function showSettings() {
          </div>
     </div>
     `;
+}
+
+// change profile pic code.
+
+function upload_image(files) {
+    // getting image name
+    const myFile = files[0].name;
+
+    // changing look for the button while image is being uploaded, disabling also keeps the user
+    // from clicking on it while uploading image
+    const changeImgBtn = _(".change-btn");
+    changeImgBtn.disable = true;
+    changeImgBtn.innerHTML = "Uploading Img...";
+
 
 }
