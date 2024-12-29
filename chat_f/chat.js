@@ -230,14 +230,53 @@ function showSettings() {
 // change profile pic code.
 
 function upload_image(files) {
+
+    if (!files.length) {
+        console.error("No file selected");
+        return;
+    }
+
     // getting image name
     const myFile = files[0].name;
+    alert(files);
+
+    // create a form data object to send the file.
+    const fileForm = new FormData();
+    fileForm.append("file", files[0]);
 
     // changing look for the button while image is being uploaded, disabling also keeps the user
     // from clicking on it while uploading image
     const changeImgBtn = _(".change-btn");
-    changeImgBtn.disable = true;
+    changeImgBtn.disabled =true;
     changeImgBtn.innerHTML = "Uploading Img...";
+
+    // sending image info over to uploader php file.
+    fetch("../../backend/chat_backend/uploader.php", {
+        method: "POST",
+        body: fileForm
+    })
+    .then(res => {
+        if (!res.ok) {
+            throw new Error("Connection with uploader.php was not successful");
+        } else{ 
+            return res.json();
+        }
+    })
+    .then(data => {
+        if (data.success) {
+            console.log("success");
+            // console.log(data.result.name);
+        } else {
+            console.log(data.error);
+        }
+    })
+    .catch(err => {
+        console.error("error in chat.js ", err.message);
+    })
+    .finally( () => {
+        changeImgBtn.disabled = false;
+        changeImgBtn.innerHTML = "Change Image";
+    })
 
 
 }
