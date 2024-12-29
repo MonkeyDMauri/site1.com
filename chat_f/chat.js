@@ -238,7 +238,6 @@ function upload_image(files) {
 
     // getting image name
     const myFile = files[0].name;
-    alert(files);
 
     // create a form data object to send the file.
     const fileForm = new FormData();
@@ -265,7 +264,7 @@ function upload_image(files) {
     .then(data => {
         if (data.success) {
             console.log("success");
-            // console.log(data.result.name);
+            console.log(data.result);
         } else {
             console.log(data.error);
         }

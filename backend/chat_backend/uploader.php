@@ -21,7 +21,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
             // send response bac to javascript file.
             echo json_encode([
-                "success" => true
+                "success" => true,
+                "result" => $_FILES["file"]
             ]);
         } else {
             echo json_encode([
