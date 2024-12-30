@@ -1,5 +1,6 @@
 <?php
 
+
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     header("Content-Type:application/json");
     
@@ -22,7 +23,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             // send response bac to javascript file.
             echo json_encode([
                 "success" => true,
-                "result" => $_FILES["file"]
+                "result" => $_FILES["file"],
+                "picName" => $_FILES["file"]["name"]
             ]);
         } else {
             echo json_encode([

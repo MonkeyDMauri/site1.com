@@ -229,6 +229,10 @@ function showSettings() {
 
 // change profile pic code.
 
+// this variable will then contain the name of the profile picture so we can
+//dynamically change the profile pic in settings.
+let picName;
+
 function upload_image(files) {
 
     if (!files.length) {
@@ -265,6 +269,7 @@ function upload_image(files) {
         if (data.success) {
             console.log("success");
             console.log(data.result);
+            saveImage(data.picName);
         } else {
             console.log(data.error);
         }
@@ -278,4 +283,43 @@ function upload_image(files) {
     })
 
 
+}
+
+// CODE TO SAVE IMAGE NAME INTO DB.
+// once the pic is uploaded successfully this function will be called.
+
+function saveImage(picName) {
+
+    // data object.
+    const dataObj = {
+        "fileName" : picName
+    }
+
+    fetch("../../backend/chat_backend/saveImageToDb.php", {
+        method: "POST",
+        headers: {
+            "Content-Type":"application/json"
+        },
+        body: JSON.stringify(dataObj)
+    })
+    .then(res => {
+        if(!res.ok) {
+            throw new Error("Networ connection was not successful");
+        } else {
+            return res.json();
+        }
+    })
+    .then(data => {
+        if (data.success) {
+            console.log("pic was saved");
+            picName = data.name;
+            console.log(picName);
+            
+        } else {
+            console.log(data.error);
+        }
+    })
+    .catch(err => {
+        console.error("Error in promise: ", err.message);
+    })
 }
