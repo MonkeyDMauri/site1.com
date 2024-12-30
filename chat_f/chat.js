@@ -189,7 +189,10 @@ function showSettings() {
 
         <div style="display:flex; flex-direction: column; align-items:center;">
             <img class="settings-profile-pic" src="./chat_pics/ui/images/male.jpeg">
-            <button class="change-btn">Change Image</button>
+            <label for="change-btn" class="change-btn">
+                Change Image
+            </label>
+            <input type="file" id="change-btn">
         </div>
         <div class="signin-wrap">
             <h1 style="text-align: center;">Sign In</h1>
@@ -223,4 +226,38 @@ function showSettings() {
     </div>
     `;
 
+    // this event listener had to go inside this function because if for some reason I added it
+    // outside of it then it just wont work, the reasons is because the #change-btn element is not there
+    // when the page firts loads, im not sure why but it works in different way buttons do. 
+    const changeImgInput = _("#change-btn");
+
+    changeImgInput.addEventListener("change", e => {
+        uploadImage(e.target.files);
+    });
+
 }
+
+// code to upload image.
+
+function uploadImage(files) {
+    console.log(files[0]);
+
+    const fileForm = new FormData();
+    fileForm.append("file", files[0]);
+
+    fetch("../../backend/chat_backend/uploader.php", {
+        method: "POST",
+        body:fileForm
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            console.log("pic uploaded");
+        } else {
+            console.log(data.error);
+        }
+    })
+    .catch(err => {
+        console.error("Error in chat.js promise: ", err.message);
+    })
+};

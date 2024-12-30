@@ -229,6 +229,8 @@
 }
 
 
+/* change profile pic styling */
+
 .settings-profile-pic {
     width: 150px;
     height: 150px;
@@ -247,4 +249,8 @@
 
 .change-btn:hover {
     background-color: rgb(57, 57, 201);
+}
+
+#change-btn {
+    display: none;
 }
