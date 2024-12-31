@@ -16,7 +16,8 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
     echo json_encode([
         "success" => true,
         "username" => $result["username"],
-        "email" => $result["email"]
+        "email" => $result["email"],
+        "result" => $result
     ]);
 
     $pdo = null;

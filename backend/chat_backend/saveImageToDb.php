@@ -11,11 +11,17 @@ if($_SERVER["REQUEST_METHOD"] === "POST") {
         require_once "../general/dbh.php";
         require_once "../general/session.conf.php";
 
-        $query = "UPDATE users SET image = :destination WHERE id = :id;";
+        $query = "UPDATE users SET img = :destination WHERE username = :username;";
         $stmt = $pdo->prepare($query);
-        $stmt->bindParam(":id", $_SESSION["user_id"]);
         $stmt->bindParam(":destination", $picName);
+        $stmt->bindParam(":username", $_SESSION["user_username"]);
         $stmt->execute();
+
+        if ($stmt->rowCount() === 0) {
+            error_log("No rows updated. User ID might not exist or data didn't change.");
+            echo json_encode(["error" => "Update failed."]);
+            exit;
+        }
 
         $pdo = null;
         $stmt = null;

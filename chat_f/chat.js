@@ -21,7 +21,6 @@ function show_user_info() {
         if (data.success) {
             usernameWrap.innerHTML = data.username;
             emailWrap.innerHTML = data.email;
-            console.log(data);
         } else{ 
             console.log("error when getting user info");
         }
@@ -76,6 +75,36 @@ function logout() {
         console.error("Error when login out ", err.message);
     })
 }
+
+// GET CURRENT USER INFO CODE.
+
+// this variable will then contain the name of the profile picture so we can
+//dynamically change the profile pic in settings.
+let userInfo;
+
+function getUserInfo() {
+    fetch("../../backend/chat_backend/get_current_user_info.php")
+    .then(res => {
+        if(!res.ok) {
+            throw new Error("Network error in chat.js");
+        } else {
+            return res.json();
+        }
+    })
+    .then(data => {
+        if (data.success) {
+            userInfo = data.result;
+            console.log(userInfo);
+        } else {
+            console.log(data.error);
+        }
+    })
+    .catch(err => {
+        console.error("error in promise to get user info: ", err.message);
+    })
+}
+
+getUserInfo();
 
 // CHAT CODE
 
@@ -183,12 +212,24 @@ document.addEventListener("click", e => {
 })
 
 function showSettings() {
+
+    // check user info before displaying.
+    getUserInfo();
+    
+
+    // checking ig current user has a profile pic
+    const profilePic = userInfo["img"];
+
+    console.log("show settings");
+    console.log(profilePic);
+
     const innerLeftPanel = _(".inner-left-pannel");
+    innerLeftPanel.innerHTML = " ";
     innerLeftPanel.innerHTML = `
     <div class="settings-wrapper">
 
         <div style="display:flex; flex-direction: column; align-items:center;">
-            <img class="settings-profile-pic" src="./chat_pics/ui/images/male.jpeg">
+            <img class="settings-profile-pic" src="../../backend/chat_backend/uploads/${profilePic ? userInfo["img"] : "male.jpg"}">
             <label for="change-img-input" class="change-btn" style="display:inline-block; text-align:center;">
                 Change Image
             </label>
@@ -228,10 +269,6 @@ function showSettings() {
 }
 
 // change profile pic code.
-
-// this variable will then contain the name of the profile picture so we can
-//dynamically change the profile pic in settings.
-let picName;
 
 function upload_image(files) {
 
@@ -314,7 +351,7 @@ function saveImage(picName) {
             console.log("pic was saved");
             picName = data.name;
             console.log(picName);
-            
+            showSettings();
         } else {
             console.log(data.error);
         }
