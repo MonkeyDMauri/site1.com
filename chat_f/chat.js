@@ -220,7 +220,7 @@ async function showSettings() {
     // checking ig current user has a profile pic
     const profilePic = userInfo["img"];
 
-    console.log("show settings"mmm);
+    console.log("show settings");
     console.log(profilePic);
 
     const innerLeftPanel = _(".inner-left-pannel");
