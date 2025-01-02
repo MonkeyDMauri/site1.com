@@ -82,26 +82,26 @@ function logout() {
 //dynamically change the profile pic in settings.
 let userInfo;
 
-function getUserInfo() {
-    fetch("../../backend/chat_backend/get_current_user_info.php")
-    .then(res => {
-        if(!res.ok) {
-            throw new Error("Network error in chat.js");
-        } else {
-            return res.json();
+async function getUserInfo() {
+
+    try {
+        const res = await fetch("../../backend/chat_backend/get_current_user_info.php");
+
+        if (!res.ok) {
+            throw new Error("Error in network:", res.status);
         }
-    })
-    .then(data => {
+
+        const data = await res.json();
+
         if (data.success) {
             userInfo = data.result;
             console.log(userInfo);
         } else {
             console.log(data.error);
         }
-    })
-    .catch(err => {
-        console.error("error in promise to get user info: ", err.message);
-    })
+    } catch(error) {
+        console.log("error in network getUserInfo: ", error.message);
+    }
 }
 
 getUserInfo();
@@ -211,16 +211,16 @@ document.addEventListener("click", e => {
     }
 })
 
-function showSettings() {
+async function showSettings() {
 
     // check user info before displaying.
-    getUserInfo();
+    await getUserInfo();
     
 
     // checking ig current user has a profile pic
     const profilePic = userInfo["img"];
 
-    console.log("show settings");
+    console.log("show settings"mmm);
     console.log(profilePic);
 
     const innerLeftPanel = _(".inner-left-pannel");
@@ -270,54 +270,54 @@ function showSettings() {
 
 // change profile pic code.
 
-function upload_image(files) {
+async function upload_image(files) {
 
     if (!files.length) {
         console.error("No file selected");
         return;
     }
 
-    // getting image name
-    const myFile = files[0].name;
-
-    // create a form data object to send the file.
-    const fileForm = new FormData();
-    fileForm.append("file", files[0]);
-
-    // changing look for the button while image is being uploaded, disabling also keeps the user
-    // from clicking on it while uploading image
-    const changeImgBtn = _(".change-btn");
-    changeImgBtn.disabled =true;
-    changeImgBtn.innerHTML = "Uploading Img...";
-
     // sending image info over to uploader php file.
-    fetch("../../backend/chat_backend/uploader.php", {
-        method: "POST",
-        body: fileForm
-    })
-    .then(res => {
+
+    try {
+
+        // getting image name
+        const myFile = files[0].name;
+
+        // create a form data object to send the file.
+        const fileForm = new FormData();
+        fileForm.append("file", files[0]);
+
+        // changing look for the button while image is being uploaded, disabling also keeps the user
+        // from clicking on it while uploading image
+        const changeImgBtn = _(".change-btn");
+        changeImgBtn.disabled =true;
+        changeImgBtn.innerHTML = "Uploading Img...";
+
+        const res = await fetch("../../backend/chat_backend/uploader.php", {
+            method: "POST",
+            body: fileForm
+        })
+        
         if (!res.ok) {
             throw new Error("Connection with uploader.php was not successful");
-        } else{ 
-            return res.json();
         }
-    })
-    .then(data => {
+
+        const data = await res.json();
+
         if (data.success) {
             console.log("success");
+            changeImgBtn.disabled = false;
+            changeImgBtn.innerHTML = "Change Image";
             console.log(data.result);
             saveImage(data.picName);
         } else {
             console.log(data.error);
         }
-    })
-    .catch(err => {
-        console.error("error in chat.js ", err.message);
-    })
-    .finally( () => {
-        changeImgBtn.disabled = false;
-        changeImgBtn.innerHTML = "Change Image";
-    })
+
+    } catch(error) {
+        console.log(error);
+    }
 
 
 }
@@ -325,28 +325,29 @@ function upload_image(files) {
 // CODE TO SAVE IMAGE NAME INTO DB.
 // once the pic is uploaded successfully this function will be called.
 
-function saveImage(picName) {
+async function saveImage(picName) {
 
-    // data object.
-    const dataObj = {
-        "fileName" : picName
-    }
+    try {
 
-    fetch("../../backend/chat_backend/saveImageToDb.php", {
-        method: "POST",
-        headers: {
-            "Content-Type":"application/json"
-        },
-        body: JSON.stringify(dataObj)
-    })
-    .then(res => {
-        if(!res.ok) {
-            throw new Error("Networ connection was not successful");
-        } else {
-            return res.json();
+        // data object.
+        const dataObj = {
+            "fileName" : picName
         }
-    })
-    .then(data => {
+
+        const res = await fetch("../../backend/chat_backend/saveImageToDb.php", {
+            method: "POST",
+            headers: {
+                "Content-Type":"application/json"
+            },
+            body: JSON.stringify(dataObj)
+        })
+
+        if (!res.ok) {
+            throw new Error("Network connecton unsuccessful:", res.status);
+        }
+
+        const data = await res.json();
+
         if (data.success) {
             console.log("pic was saved");
             picName = data.name;
@@ -355,8 +356,7 @@ function saveImage(picName) {
         } else {
             console.log(data.error);
         }
-    })
-    .catch(err => {
-        console.error("Error in promise: ", err.message);
-    })
+    } catch(error) {
+        console.error(error);
+    }
 }
