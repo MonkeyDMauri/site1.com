@@ -27,10 +27,12 @@
     font-family: profile-font;
 }
 
+
 .profile-img {
-    width: 50%;
+    width: 130px;
     border: solid thin white;
     border-radius: 50%;
+    height: 130px;
 }
 
 .left-pannel label {
@@ -247,4 +249,9 @@
 
 .change-btn:hover {
     background-color: rgb(57, 57, 201);
+}
+
+.contact-pic {
+    height: 120px;
+    width: 120px;
 }

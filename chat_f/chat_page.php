@@ -21,7 +21,9 @@ if (!isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] !== true) {
     <div class="wrapper">
         <div class="left-pannel">
             <div style="padding:1rem;">
-                <img class="profile-img" src="./chat_pics/ui/images/luffy-profile.png" alt="user 3">
+                <div class="profile-pic-wrapper">
+                    <img class="profile-img" src="./chat_pics/ui/images/luffy-profile.png" alt="user 3">
+                </div>
                 <br><br>
                 <div class="username-wrap" style="font-size:1.3rem;">Username</div>
                 <br>

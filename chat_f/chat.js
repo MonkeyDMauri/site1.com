@@ -189,12 +189,23 @@ function displayContacts(contacts) {
         const contact = document.createElement("div");
         contact.classList.add("contact");
 
-        contact.innerHTML = `
+        if (!con["img"]) {
+
+
+            contact.innerHTML = `
+            
+                <img class="contact-pic" src=${con["gender"] === "male" ? "./chat_pics/ui/images/male.jpeg" : "./chat_pics/ui/images/female.jpeg"} alt="user pic">
+                <br>
+                <div class='contact-name'>${con['username']}</div>
+            `;
+        } else {
+            contact.innerHTML = `
         
-            <img src=${con["gender"] === "male" ? "./chat_pics/ui/images/male.jpeg" : "./chat_pics/ui/images/female.jpeg"} alt="user pic">
+            <img class="contact-pic" src="../../backend/chat_backend/uploads/${con["img"]}" alt="user pic">
             <br>
             <div class='contact-name'>${con['username']}</div>
-        `;
+            `;
+        }
 
         contactsWrapper.appendChild(contact);
     });
@@ -220,7 +231,7 @@ async function showSettings() {
     // checking ig current user has a profile pic
     const profilePic = userInfo["img"];
 
-    console.log("show settings"mmm);
+    console.log("show settings");
     console.log(profilePic);
 
     const innerLeftPanel = _(".inner-left-pannel");
@@ -352,11 +363,28 @@ async function saveImage(picName) {
             console.log("pic was saved");
             picName = data.name;
             console.log(picName);
-            showSettings();
+            await showSettings();
+            await updatePicProfile();
         } else {
             console.log(data.error);
         }
     } catch(error) {
         console.error(error);
     }
+}
+
+// UPDATING PROFILE PICTURE IN LEFT PANEL.
+
+updatePicProfile();
+
+async function updatePicProfile() {
+
+
+    await getUserInfo();
+
+    const picWrapper = _(".profile-pic-wrapper");
+
+    picWrapper.innerHTML = `
+        <img class="profile-img" src="../../backend/chat_backend/uploads/${userInfo["img"] ? userInfo["img"] : "male.jpg"}" alt="profile pic">
+    `;
 }
