@@ -254,4 +254,10 @@
 .contact-pic {
     height: 120px;
     width: 120px;
+    cursor: pointer;
+    transition: all 100ms ease-in-out;
+}
+
+.contact-pic:hover {
+    transform: scale(1.1);
 }

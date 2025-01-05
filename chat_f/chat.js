@@ -191,20 +191,21 @@ function displayContacts(contacts) {
 
         if (!con["img"]) {
 
-
+            // using con.img and con["img"] gives the same result.
             contact.innerHTML = `
-            
-                <img class="contact-pic" src=${con["gender"] === "male" ? "./chat_pics/ui/images/male.jpeg" : "./chat_pics/ui/images/female.jpeg"} alt="user pic">
+                <img class="contact-pic" src=${con["gender"] === "male" ? "./chat_pics/ui/images/male.jpeg" : "./chat_pics/ui/images/female.jpeg"} alt="user pic"
+                userid="${con.id}">
                 <br>
                 <div class='contact-name'>${con['username']}</div>
             `;
         } else {
             contact.innerHTML = `
         
-            <img class="contact-pic" src="../../backend/chat_backend/uploads/${con["img"]}" alt="user pic">
-            <br>
-            <div class='contact-name'>${con['username']}</div>
-            `;
+                <img class="contact-pic" src="../../backend/chat_backend/uploads/${con.img}" alt="user pic"
+                userid="${con.id}">
+                <br>
+                <div class='contact-name'>${con['username']}</div>
+                `;
         }
 
         contactsWrapper.appendChild(contact);
@@ -388,3 +389,24 @@ async function updatePicProfile() {
         <img class="profile-img" src="../../backend/chat_backend/uploads/${userInfo["img"] ? userInfo["img"] : "male.jpg"}" alt="profile pic">
     `;
 }
+
+
+// COCE TO START A CHAT.
+
+document.addEventListener("click", e => {
+    if (e.target.matches(".contact-pic")) {
+        startChat(e);
+    }
+});
+
+function startChat(e) {
+    showChats();
+    console.log("start chat");
+    const picElement = e.target.closest(".contact-pic");
+    const userId = picElement.getAttribute("userid");
+    console.log(userId);
+    const radioChat = _("#radio-chat");
+    radioChat.checked = true;
+}
+
+JUST GOT USER ID TO IDENTIFY WHICH CONTACT WE CLICKED ON
