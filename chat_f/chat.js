@@ -108,6 +108,8 @@ getUserInfo();
 
 // CHAT CODE
 
+let current_chat_user;
+
 document.addEventListener("click", e => {
     if (e.target.matches("#radio-chat")) {
         showChats();
@@ -116,9 +118,17 @@ document.addEventListener("click", e => {
 
 function showChats() {
     const innerLeftPanel = _(".inner-left-pannel");
-    innerLeftPanel.innerHTML = `
-        <div>Chat</div>
-    `;
+
+    if (!current_chat_user) {
+        innerLeftPanel.innerHTML = `
+            <div>Chat</div>
+        `;
+    } else {
+        innerLeftPanel.innerHTML = `
+            <div>${current_chat_user}</div>
+        `;
+    }
+    
 
 }
 
@@ -185,7 +195,6 @@ function displayContacts(contacts) {
     contactsWrapper.innerHTML = ` `;
 
     contacts.forEach(con => {
-        console.log("display");
         const contact = document.createElement("div");
         contact.classList.add("contact");
 
@@ -390,7 +399,8 @@ async function updatePicProfile() {
     `;
 }
 
-// COCE TO START A CHAT.
+// CODE TO START A CHAT.
+
 
 document.addEventListener("click", e => {
     if (e.target.matches(".contact-pic")) {
@@ -399,12 +409,23 @@ document.addEventListener("click", e => {
 });
 
 function startChat(e) {
-    showChats();
-    console.log("start chat");
+    // getting selected contact id.
     const picElement = e.target.closest(".contact-pic");
     const userId = picElement.getAttribute("userid");
-    console.log(userId);
+    current_chat_user = userId;
+    console.log("Contact id:", current_chat_user);
+
+    // calling function to show chats.
+    showChats();
+    console.log("start chat");
+
+    // making chat section visible.
     const radioChat = _("#radio-chat");
     radioChat.checked = true;
 }
+
+// function sendUserId(userId) {
+
+//     fetch()
+// }
 
