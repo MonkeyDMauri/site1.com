@@ -390,7 +390,6 @@ async function updatePicProfile() {
     `;
 }
 
-
 // COCE TO START A CHAT.
 
 document.addEventListener("click", e => {
@@ -409,4 +408,3 @@ function startChat(e) {
     radioChat.checked = true;
 }
 
-JUST GOT USER ID TO IDENTIFY WHICH CONTACT WE CLICKED ON
