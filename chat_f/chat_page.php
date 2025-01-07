@@ -59,10 +59,14 @@ if (!isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] !== true) {
                 </div>
 
                 <input type="radio" id="radio-chat" name="box" style="display:none;">
-                <input type="radio" id="radio-contacts" name="box" style="display:none;">
+                <input type="radio" id="radio-contacts" name="box" style="display:none;" checked>
                 <input type="radio" id="radio-settings" name="box" style="display:none;">
 
-                <div class="inner-right-pannel"></div>
+                <div class="inner-right-pannel">
+                    <div class="message-section-header">
+                    </div>
+                    <!-- messages go here -->
+                </div>
             </div>
         </div>
     </div>

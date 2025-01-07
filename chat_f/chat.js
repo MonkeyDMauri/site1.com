@@ -76,6 +76,7 @@ function logout() {
     })
 }
 
+
 // GET CURRENT USER INFO CODE.
 
 // this variable will then contain the name of the profile picture so we can
@@ -104,10 +105,12 @@ async function getUserInfo() {
     }
 }
 
+// everytime the page is loaded, the user details will be fetched from DB.
 getUserInfo();
 
 // CHAT CODE
 
+// this will store contact details for when the user clicks on a contact.
 let current_chat_user;
 
 document.addEventListener("click", e => {
@@ -121,21 +124,127 @@ function showChats() {
 
     if (!current_chat_user) {
         innerLeftPanel.innerHTML = `
-            <div>Chat</div>
+            <div>No chats to display</div>
         `;
     } else {
-        innerLeftPanel.innerHTML = `
-            <div>${current_chat_user}</div>
-        `;
+        // checking if contact has the name of an image in DB.
+        if (!current_chat_user["img"]) {
+
+            // using con.img and con["img"] gives the same result.
+            innerLeftPanel.innerHTML = `
+                Now chatting with:
+                <div class="contact-pic-wrap">
+                    <img class="contact-pic-current" src=${current_chat_user["gender"] === "male" ? "./chat_pics/ui/images/male.jpeg" : "./chat_pics/ui/images/female.jpeg"} alt="user pic"
+                    userid="${current_chat_user.id}">
+                    
+                    <div class='contact-name'>${current_chat_user['username']}</div>
+                </div>
+            `;
+        } else {
+            innerLeftPanel.innerHTML = `
+                Now chatting with:
+                <div class="contact-pic-wrap">
+                    <img class="contact-pic-current" src="../../backend/chat_backend/uploads/${current_chat_user.img}" alt="user pic"
+                    userid="${current_chat_user.id}">
+                    
+                    <div class='contact-name'>${current_chat_user['username']}</div>
+                </div>
+                `;
+        }
     }
+
+    // calling function to show messages section.
+    showMessages();
     
 
+}
+
+document.addEventListener("click", e => {
+    if (e.target.matches(".contact-pic")) {
+        startChat(e);
+    }
+});
+
+function startChat(e) {
+    // getting selected contact id.
+    const picElement = e.target.closest(".contact-pic");
+    const userId = picElement.getAttribute("userid");
+    console.log("Contact id:", current_chat_user);
+
+    // making chat section visible.
+    const radioChat = _("#radio-chat");
+    radioChat.checked = true;
+
+    //send contact id to php file to then get all the data from a user whose ID matches the one selected.
+    getSelectedContantInfo(userId);
+}
+
+function getSelectedContantInfo(contactId) {
+
+    // data object to then be sent as JSON.
+    const id = {
+        "id" : contactId
+    };
+
+    fetch("../../backend/chat_backend/getSelectedContact.php", {
+        method: "POST",
+        headers: {
+            "Content-Type" : "application/json"
+        },
+        body: JSON.stringify(id)
+    })
+    .then(res => {
+        if(!res.ok) {
+            throw new Error("Error in promise when sending contact ID to php file");
+        } else{
+            return res.json();
+        }
+    })
+    .then(data => {
+        if (data.success) {
+            console.log("Contact Info:", data.result);
+            current_chat_user = data.result;
+
+            // calling function to show chats.
+            console.log("start chat");
+            console.log("Current chat user", current_chat_user);
+            showChats();
+        } else {
+            console.log(data.error);
+        }
+    })
+}
+
+function showMessages() {
+    // displaying contact image and name at the top of the messages section.
+    const messagesHeader = _(".message-section-header");
+
+    // check if contact has an image name in db.
+    if (current_chat_user.img) {
+        messagesHeader.innerHTML = `
+            <img class="contact-pic-messages" src="../../backend/chat_backend/uploads/${current_chat_user.img}">
+            <div style="color:'black';font-size:2rem;">${current_chat_user.username}</div>
+        `;
+    } else {
+        // if contact doesnt have a profile pic name, a default image will be displayed.
+        messagesHeader.innerHTML = `
+            <img class="contact-pic-messages" src="${current_chat_user.gender === "male" ? "./chat_pics/ui/images/male.jpeg" : "./chat_pics/ui/images/female.jpeg"}">
+            <div style="color:'black';font-size:2rem;">${current_chat_user.username}</div>
+        `;
+    }
+
+    
 }
 
 
 // GET CONTACTS CODE.
 
 let allContacts = [];
+
+// the first thing I wanna show when the page is first loaded is the contacts so the first thing to 
+// do is get all te contacts and then display them.
+get_contacts();
+displayContacts(allContacts);
 
 const contacts_btn = _("#radio-contacts");
 contacts_btn.addEventListener("click", get_contacts);
@@ -402,30 +511,18 @@ async function updatePicProfile() {
 // CODE TO START A CHAT.
 
 
-document.addEventListener("click", e => {
-    if (e.target.matches(".contact-pic")) {
-        startChat(e);
-    }
-});
 
-function startChat(e) {
-    // getting selected contact id.
-    const picElement = e.target.closest(".contact-pic");
-    const userId = picElement.getAttribute("userid");
-    current_chat_user = userId;
-    console.log("Contact id:", current_chat_user);
 
-    // calling function to show chats.
-    showChats();
-    console.log("start chat");
 
-    // making chat section visible.
-    const radioChat = _("#radio-chat");
-    radioChat.checked = true;
-}
-
-// function sendUserId(userId) {
-
-//     fetch()
-// }
-
+// CREATE TABLE messages (
+//     id BIGINT PRIMARY KEY AUTO_INCREMENT,
+//     sender BIGINT,
+//     receiver BIGINT,
+//     message TEXT,
+//     files TEXT,
+//     date DATETIME,
+//     seen INT,
+//     received INT,
+//     deleted_sender TINYINT,
+//     deleted_receiver TINYINT,
+// );
