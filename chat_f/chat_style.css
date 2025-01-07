@@ -285,3 +285,11 @@
     width: 60px;
     border-radius: 50%;
 }
+
+.message-section-header {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    background-color: #aaa;
+    padding: .5rem;
+}

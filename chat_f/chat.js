@@ -223,15 +223,17 @@ function showMessages() {
     if (current_chat_user.img) {
         messagesHeader.innerHTML = `
             <img class="contact-pic-messages" src="../../backend/chat_backend/uploads/${current_chat_user.img}">
-            <div style="color:'black';font-size:2rem;">${current_chat_user.username}</div>
+            <div style="color:'black';font-size:1.5rem;">${current_chat_user.username}</div>
         `;
     } else {
         // if contact doesnt have a profile pic name, a default image will be displayed.
         messagesHeader.innerHTML = `
             <img class="contact-pic-messages" src="${current_chat_user.gender === "male" ? "./chat_pics/ui/images/male.jpeg" : "./chat_pics/ui/images/female.jpeg"}">
-            <div style="color:'black';font-size:2rem;">${current_chat_user.username}</div>
+            <div style="color:'black';font-size:1.5rem;">${current_chat_user.username}</div>
         `;
     }
+
+    // SHOW MESSAGES.
 
     
 }
