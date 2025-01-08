@@ -239,80 +239,10 @@ function showMessages() {
 
     // check if contact has an image name in db.
     if (current_chat_user.img) {
-        messagesWrapper.innerHTML = `
-        <div class="message-left">
-            <div></div>
-            <img src="../../backend/chat_backend/uploads/${current_chat_user.img}">
-            <b>${current_chat_user.username}</b>
-            <br>
-            This is a test message
-            <br>
-            <span style="color: #999; font-size:11px;">08 Jan 2025 03:00AM</span>
-        </div>
-
-        <div class="message-right">
-            <div></div>
-            <img src="../../backend/chat_backend/uploads/${userInfo.img}">
-            <b>${userInfo.username}</b>
-            <br>
-            This is a test message
-            <br>
-            <span style="color: #999; font-size:11px;">08 Jan 2025 03:00AM</span>
-        </div>
-
-        <div class="message-left">
-            <div></div>
-            <img src="../../backend/chat_backend/uploads/${current_chat_user.img}">
-            <b>${current_chat_user.username}</b>
-            <br>
-            This is a test message
-            <br>
-            <span style="color: #999; font-size:11px;">08 Jan 2025 03:00AM</span>
-        </div>
-
-        <div class="message-right">
-            <div></div>
-            <img src="../../backend/chat_backend/uploads/${userInfo.img}">
-            <b>${userInfo.username}</b>
-            <br>
-            This is a test message
-            <br>
-            <span style="color: #999; font-size:11px;">08 Jan 2025 03:00AM</span>
-        </div>
-
-        <div class="message-left">
-            <div></div>
-            <img src="../../backend/chat_backend/uploads/${current_chat_user.img}">
-            <b>${current_chat_user.username}</b>
-            <br>
-            This is a test message
-            <br>
-            <span style="color: #999; font-size:11px;">08 Jan 2025 03:00AM</span>
-        </div>
-        `;
+        messagesWrapper.innerHTML = message_left_with_pic() + message_right();
     } else {
         // if contact doesnt have a profile pic name, a default image will be displayed.
-        messagesWrapper.innerHTML = `
-        <div class="message-left">
-            <div></div>
-            <img src="${current_chat_user.gender === "male" ? "./chat_pics/ui/images/male.jpeg" : "./chat_pics/ui/images/female.jpeg"}">
-            <b>${current_chat_user.username}</b>
-            <br>
-            This is a test message
-            <br>
-            <span style="color: #999; font-size:11px;">08 Jan 2025 03:00AM</span>
-        </div>
-
-        <div class="message-right">
-            <div></div>
-            <img src="../../backend/chat_backend/uploads/${userInfo.img}">
-            <b>${userInfo.username}</b>
-            <br>
-            This is a test message
-            <br>
-            <span style="color: #999; font-size:11px;">08 Jan 2025 03:00AM</span>
-        </div>
-        `;
+        messagesWrapper.innerHTML = message_left_with_no_pic() + message_right() + message_right();
     }
 
     // SHOW TEXT BOX AND SEND MESSAGE BUTTON.
@@ -323,6 +253,8 @@ function showMessages() {
         btnWrapper.style.background= "#1e8f60"
         btnWrapper.innerHTML = `
             <div class="messages-btns-wrap">
+                <label for="attach-file"><img class="clip-img" src="./chat_pics/ui/icons/clip.png"></label>
+                <input type="file" name="file" style="display:none;" id="attach-file">
                 <input type="text" class="message-box" placeholder="Type your message...">
                 <button class="send-mssg-btn">send</button>
             </div>
@@ -330,6 +262,50 @@ function showMessages() {
     }
     
     
+}
+
+// templates for messages display.
+function message_right() {
+    return `
+        <div class="message-right">
+            <div></div>
+            <img src="../../backend/chat_backend/uploads/${userInfo.img}">
+            <b>${userInfo.username}</b>
+            <br>
+            This is a test message
+            <br>
+            <span style="color: #999; font-size:11px;">08 Jan 2025 03:00AM</span>
+        </div>
+    `;
+}
+
+
+function message_left_with_pic() {
+    return `
+        <div class="message-left">
+            <div></div>
+            <img src="../../backend/chat_backend/uploads/${current_chat_user.img}">
+            <b>${current_chat_user.username}</b>
+            <br>
+            This is a test message
+            <br>
+            <span style="color: #999; font-size:11px;">08 Jan 2025 03:00AM</span>
+        </div>
+    `;
+}
+
+function message_left_with_no_pic() {
+    return `
+        <div class="message-left">
+            <div></div>
+            <img src="${current_chat_user.gender === "male" ? "./chat_pics/ui/images/male.jpeg" : "./chat_pics/ui/images/female.jpeg"}">
+            <b>${current_chat_user.username}</b>
+            <br>
+            This is a test message
+            <br>
+            <span style="color: #999; font-size:11px;">08 Jan 2025 03:00AM</span>
+        </div>
+    `;
 }
 
 
