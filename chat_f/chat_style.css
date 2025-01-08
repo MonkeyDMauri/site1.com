@@ -286,10 +286,139 @@
     border-radius: 50%;
 }
 
+/*MESSAGES SECTION STYLE*/
+
+/*for some reason whenever the user selects a contact and the chat sections opens and then even if
+you select another section like settings or contacts the chat section was still showing so I had to add
+this CSS right here hide chat section*/
+
+#radio-contacts:checked ~ .inner-right-pannel > .messages-wrapper {
+    display: none; 
+}
+
+#radio-settings:checked ~ .inner-right-pannel > .messages-wrapper {
+    display: none; 
+}
+#radio-contacts:checked ~ .inner-right-pannel > .message-section-header {
+    display: none; 
+}
+
+#radio-settings:checked ~ .inner-right-pannel > .message-section-header {
+    display: none; 
+}
+
+#radio-contacts:checked ~ .inner-right-pannel > .messages-btns-wrapper {
+    display: none; 
+}
+
+#radio-settings:checked ~ .inner-right-pannel > .messages-btns-wrapper {
+    display: none; 
+}
+
 .message-section-header {
     display: flex;
     gap: 1rem;
     align-items: center;
     background-color: #aaa;
     padding: .5rem;
+}
+
+.messages-wrapper {
+    height: 350px;
+    background-color: rgb(223, 245, 223);
+    overflow-y: scroll;
+}
+
+.message-left {
+    height: 70px;
+    width: 70%;
+    margin: 10px;
+    border: solid 1px #aaa;
+    padding: .3rem;
+    padding-right: .5rem;
+    box-shadow: 0px 2px 8px rgb(0, 0, 0, 0.6);
+    background-color: #eee;
+    color: #444;
+    float: left;
+    border-bottom-left-radius: 50%;
+    position: relative;
+}
+
+.message-left img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: solid 2px white;
+    float: left;
+}
+
+.message-left div {
+    position: absolute;
+    top: 15px;
+    left: -10px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #80b967;
+}
+
+.message-right {
+    height: 70px;
+    width: 70%;
+    margin: 10px;
+    border: solid 1px #aaa;
+    padding: .3rem;
+    padding-right: .5rem;
+    box-shadow: 0px 2px 8px rgb(0, 0, 0, 0.6);
+    background-color: #ecf1d2;
+    color: #444;
+    float: right;
+    border-bottom-right-radius: 50%;
+    position: relative;
+}
+
+.message-right img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: solid 2px white;
+    float: right;
+}
+
+.message-right div {
+    position: absolute;
+    top: 15px;
+    right: -10px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #80b967;
+}
+
+.messages-btns-wrapper {
+    /* background-color: #1e8f60; */
+    min-height: 35px;
+    display: flex;
+    gap: 2rem;
+    padding: .5rem;
+}
+
+.messages-btns-wrap {
+    display: flex;
+    gap: 2rem;
+}
+
+.message-box {
+    font-size: 1.5rem;
+    border-radius: .5rem;
+    padding: .3rem;
+}
+
+.send-mssg-btn {
+    font-size: 1.5rem;
+    padding: 0 .5rem;
+    border-radius: .5rem;
+    border: none;
+    background-color: blue;
+    color: white;
 }

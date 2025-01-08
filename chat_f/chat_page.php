@@ -25,7 +25,7 @@ if (!isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] !== true) {
                     <img class="profile-img" src="./chat_pics/ui/images/luffy-profile.png" alt="user 3">
                 </div>
                 <br><br>
-                <div class="username-wrap" style="font-size:1.3rem;">Username</div>
+                <div class="username-wrap" style="font-size:1.3rem;"><?php echo $_SESSION["user_username"]?></div>
                 <br>
                 <div class="email-wrap" style="opacity:0.5; margin:0; font-size:1rem">Email</div>
                 <br><br><br>
@@ -48,7 +48,7 @@ if (!isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] !== true) {
                 <div class="loader">
                     <img src="./chat_pics/ui/icons/giphy.gif" alt="loading gif" style="width: 110px;">
                 </div>    
-                My Chat
+                Maubook
             </div>
             <div class="containe" style="display:flex;">
 
@@ -65,7 +65,14 @@ if (!isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] !== true) {
                 <div class="inner-right-pannel">
                     <div class="message-section-header">
                     </div>
-                    <!-- messages go here -->
+                    <div class="messages-wrapper">
+                        <!-- messages go here -->
+                    </div> 
+                    <div class="messages-btns-wrapper">
+                        <!-- box to type message and send messages go here -->
+                         
+                         
+                    </div>
                 </div>
             </div>
         </div>

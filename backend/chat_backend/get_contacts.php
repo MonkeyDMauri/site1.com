@@ -22,12 +22,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         // code to get all contacts except for the one who's ID matches the ID we just
         // retreived using current username.
         $query2 = "SELECT * FROM users WHERE id != :id;";
-        $stmt = $pdo->prepare($query2);
-        $stmt->bindParam(":id", $id);
-        $stmt->execute();
+        $stmt2 = $pdo->prepare($query2);
+        $stmt2->bindParam(":id", $id);
+        $stmt2->execute();
 
 
-        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $result = $stmt2->fetchAll(PDO::FETCH_ASSOC);
 
         if ($result) {
             echo json_encode([

@@ -235,6 +235,100 @@ function showMessages() {
 
     // SHOW MESSAGES.
 
+    const messagesWrapper = _(".messages-wrapper");
+
+    // check if contact has an image name in db.
+    if (current_chat_user.img) {
+        messagesWrapper.innerHTML = `
+        <div class="message-left">
+            <div></div>
+            <img src="../../backend/chat_backend/uploads/${current_chat_user.img}">
+            <b>${current_chat_user.username}</b>
+            <br>
+            This is a test message
+            <br>
+            <span style="color: #999; font-size:11px;">08 Jan 2025 03:00AM</span>
+        </div>
+
+        <div class="message-right">
+            <div></div>
+            <img src="../../backend/chat_backend/uploads/${userInfo.img}">
+            <b>${userInfo.username}</b>
+            <br>
+            This is a test message
+            <br>
+            <span style="color: #999; font-size:11px;">08 Jan 2025 03:00AM</span>
+        </div>
+
+        <div class="message-left">
+            <div></div>
+            <img src="../../backend/chat_backend/uploads/${current_chat_user.img}">
+            <b>${current_chat_user.username}</b>
+            <br>
+            This is a test message
+            <br>
+            <span style="color: #999; font-size:11px;">08 Jan 2025 03:00AM</span>
+        </div>
+
+        <div class="message-right">
+            <div></div>
+            <img src="../../backend/chat_backend/uploads/${userInfo.img}">
+            <b>${userInfo.username}</b>
+            <br>
+            This is a test message
+            <br>
+            <span style="color: #999; font-size:11px;">08 Jan 2025 03:00AM</span>
+        </div>
+
+        <div class="message-left">
+            <div></div>
+            <img src="../../backend/chat_backend/uploads/${current_chat_user.img}">
+            <b>${current_chat_user.username}</b>
+            <br>
+            This is a test message
+            <br>
+            <span style="color: #999; font-size:11px;">08 Jan 2025 03:00AM</span>
+        </div>
+        `;
+    } else {
+        // if contact doesnt have a profile pic name, a default image will be displayed.
+        messagesWrapper.innerHTML = `
+        <div class="message-left">
+            <div></div>
+            <img src="${current_chat_user.gender === "male" ? "./chat_pics/ui/images/male.jpeg" : "./chat_pics/ui/images/female.jpeg"}">
+            <b>${current_chat_user.username}</b>
+            <br>
+            This is a test message
+            <br>
+            <span style="color: #999; font-size:11px;">08 Jan 2025 03:00AM</span>
+        </div>
+
+        <div class="message-right">
+            <div></div>
+            <img src="../../backend/chat_backend/uploads/${userInfo.img}">
+            <b>${userInfo.username}</b>
+            <br>
+            This is a test message
+            <br>
+            <span style="color: #999; font-size:11px;">08 Jan 2025 03:00AM</span>
+        </div>
+        `;
+    }
+
+    // SHOW TEXT BOX AND SEND MESSAGE BUTTON.
+    const btnWrapper = _(".messages-btns-wrapper");
+
+    // if theres a contact selected the buttons will showup, otherwise it'd make no sense.
+    if (current_chat_user) {
+        btnWrapper.style.background= "#1e8f60"
+        btnWrapper.innerHTML = `
+            <div class="messages-btns-wrap">
+                <input type="text" class="message-box" placeholder="Type your message...">
+                <button class="send-mssg-btn">send</button>
+            </div>
+        `;
+    }
+    
     
 }
 
@@ -246,7 +340,7 @@ let allContacts = [];
 // the first thing I wanna show when the page is first loaded is the contacts so the first thing to 
 // do is get all te contacts and then display them.
 get_contacts();
-displayContacts(allContacts);
+// displayContacts(allContacts);
 
 const contacts_btn = _("#radio-contacts");
 contacts_btn.addEventListener("click", get_contacts);
@@ -259,6 +353,7 @@ async function get_contacts() {
 
     // Get current username.
     const username = _(".username-wrap").textContent;
+    console.log("current user username:", username);
 
     const jsonData = { "username": username };
 
