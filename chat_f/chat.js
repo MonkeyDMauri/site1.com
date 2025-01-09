@@ -79,7 +79,7 @@ function logout() {
 
 // GET CURRENT USER INFO CODE.
 
-// this variable will then contain the name of the profile picture so we can
+// this variable will then contain all info of the profile picture so we can
 //dynamically change the profile pic in settings.
 let userInfo;
 
@@ -179,7 +179,7 @@ function startChat(e) {
     getSelectedContantInfo(userId);
 }
 
-function getSelectedContantInfo(contactId) {
+async function getSelectedContantInfo(contactId) {
 
     // data object to then be sent as JSON.
     const id = {
@@ -209,6 +209,8 @@ function getSelectedContantInfo(contactId) {
             console.log("start chat");
             console.log("Current chat user", current_chat_user);
             showChats();
+
+            get_messages();
         } else {
             console.log(data.error);
         }
@@ -307,6 +309,129 @@ function message_left_with_no_pic() {
         </div>
     `;
 }
+
+// CODE TO SEND MESSAGE.
+
+document.addEventListener("click", e => {
+    if (e.target.matches(".send-mssg-btn")){
+        send_message();
+    }
+})
+
+async function send_message(){
+    // getting message data.
+    const message_text = _(".message-box").value;
+
+    // verify if message is empty, if it is, message will not be sent..
+    if (message_text.trim() == "") {
+        alert("please type something");
+        return;
+    }
+
+    alert(message_text);
+
+    // message info to be sent.
+    const messageInfo = {
+        "senderUsername": userInfo.username,
+        "mssgid": generateRandomString(30),
+        "message" : message_text.trim(),
+        "date": getFormattedDate(),
+        "receiver" : current_chat_user.id
+    };
+
+    // sending message to be saved to messages table.
+    try {
+        const res = await fetch("../../backend/chat_backend/messages/save_message.php", {
+            method:"POST",
+            body: JSON.stringify(messageInfo)
+        });
+        if (!res.ok) {
+            throw new Error("Error in promise when sending message", res.status);
+        }
+
+        const data = await res.json();
+
+        if (data.success) {
+            console.log("Message: ",data.result, "!!");
+            console.log("Message saved");
+        } else {
+            console.log(data.error);
+        }
+    } catch(err) {
+        console.error(err);
+    }
+    
+}
+
+
+// this function will get messages depending on the id of the current chat selected, therefor it will be called when a contact is selected.
+async function get_messages() {
+    console.log("selected contact id from get_messages:", current_chat_user.id);
+
+    // getting current chat selected id(receiver) to then send it as JSON.
+    const dataa = {
+        "contact_id" : current_chat_user.id,
+        "userId" : userInfo.id
+    };
+
+    try {
+        const res = await fetch("../../backend/chat_backend/messages/get_messages.php", {
+            method: "POST",
+            headers : {
+                "Content-Type":"application/json"
+            },
+            body: JSON.stringify(dataa)
+        });
+
+        if (!res.ok) {
+            throw new Error("Error in res promise:", res.status);
+        }
+
+        const data = await res.json();
+
+        if (data.success) {
+            console.log("messages found");
+            console.log(data.sender);
+            console.log(data.receiver);
+        } else if (data.empty) {
+            console.log("No messages were found");
+            console.log(data.sender);
+            console.log(data.receiver);
+        } else {
+            console.log(data.error);
+        }
+    } catch(err) {
+        console.error(err);
+    }
+}
+
+// function to generate random string.
+function generateRandomString(length) {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let result = '';
+    for (let i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+    return result;
+}
+
+
+// function to current format date.
+function getFormattedDate() {
+    const now = new Date();
+
+    // Get components of the date
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+    const day = String(now.getDate()).padStart(2, '0');
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const seconds = String(now.getSeconds()).padStart(2, '0');
+
+    // Combine into the desired format
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+}
+
 
 
 // GET CONTACTS CODE.
