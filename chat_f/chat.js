@@ -210,7 +210,8 @@ async function getSelectedContantInfo(contactId) {
             console.log("Current chat user", current_chat_user);
             showChats();
 
-            get_messages();
+            // get_messages();
+            displayMessages();
         } else {
             console.log(data.error);
         }
@@ -328,16 +329,21 @@ async function send_message(){
         return;
     }
 
-    alert(message_text);
 
     // message info to be sent.
-    const messageInfo = {
+    let messageInfo = {
         "senderUsername": userInfo.username,
         "mssgid": generateRandomString(30),
         "message" : message_text.trim(),
         "date": getFormattedDate(),
         "receiver" : current_chat_user.id
     };
+
+    // checking for already existing message id.
+    const flag = await get_message_id(userInfo.id, current_chat_user.id);
+    if (flag) {
+        messageInfo.mssgid = flag;
+    }
 
     // sending message to be saved to messages table.
     try {
@@ -361,6 +367,45 @@ async function send_message(){
         console.error(err);
     }
     
+}
+
+async function get_message_id(senderId, receiverId) {
+
+    const infoObject = {
+        "contact_id" : receiverId,
+        "userId": senderId
+    };
+
+
+    try {
+        const res = await fetch("../../backend/chat_backend/messages/get_messages.php", {
+            method: "POST",
+            headers : {
+                "Content-Type":"application/json"
+            },
+            body: JSON.stringify(infoObject)
+        });
+
+        if (!res.ok) {
+            throw new Error("Error in res promise:", res.status);
+        }
+
+        const data = await res.json();
+
+        if (data.success) {
+            console.log("messages found when trying to get mssgid");
+            console.log("message id:", data.messages.mssgid);
+            return data.messages.mssgid;
+        } else if (data.empty) {
+            console.log("No messages were found when trying to get mssgid");
+            console.log("No message id was found");
+            return false;
+        } else {
+            console.log(data.error);
+        }
+    } catch(err) {
+        console.error(err);
+    }
 }
 
 
@@ -393,16 +438,24 @@ async function get_messages() {
             console.log("messages found");
             console.log(data.sender);
             console.log(data.receiver);
+            return data.messages;
         } else if (data.empty) {
             console.log("No messages were found");
             console.log(data.sender);
             console.log(data.receiver);
+            return "No messages were found";
         } else {
             console.log(data.error);
         }
     } catch(err) {
         console.error(err);
     }
+}
+
+async function displayMessages() {
+    let allMessages = await get_messages();
+
+    console.log(allMessages);
 }
 
 // function to generate random string.

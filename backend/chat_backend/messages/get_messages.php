@@ -29,7 +29,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             echo json_encode([
                 "success" => true,
                 "sender" => $userId,
-                "receiver" => $contact_id
+                "receiver" => $contact_id,
+                "messages" => $result
             ]);
         } else {
             echo json_encode([
