@@ -96,7 +96,7 @@ async function getUserInfo() {
 
         if (data.success) {
             userInfo = data.result;
-            console.log(userInfo);
+            console.log("current user info:", userInfo);
         } else {
             console.log(data.error);
         }
@@ -107,6 +107,30 @@ async function getUserInfo() {
 
 // everytime the page is loaded, the user details will be fetched from DB.
 getUserInfo();
+
+// UPDATING PROFILE PICTURE IN LEFT PANEL.
+
+updatePicProfile();
+
+async function updatePicProfile() {
+
+
+    await getUserInfo();
+
+    const picWrapper = _(".profile-pic-wrapper");
+
+    const havePic = userInfo["img"];
+
+    if (havePic) {
+        picWrapper.innerHTML = `
+        <img class="profile-img" src="../../backend/chat_backend/uploads/${userInfo["img"]}" alt="profile pic">
+    `;
+    } else {
+        picWrapper.innerHTML = `
+            <img class="profile-img" src="${userInfo.gender === "male" ? "./chat_pics/ui/images/male.jpeg" : "./chat_pics/ui/images/female.jpeg"}" alt="profile pic">
+        `;
+    }
+}
 
 // CHAT CODE
 
@@ -122,6 +146,9 @@ document.addEventListener("click", e => {
 function showChats() {
     const innerLeftPanel = _(".inner-left-pannel");
 
+    // if the chat button in the left panel is clicked but if there's no contact 
+    // selected then nothing will be shown but short message, otherwise we will show who the user
+    // is chatting with.
     if (!current_chat_user) {
         innerLeftPanel.innerHTML = `
             <div>No chats to display</div>
@@ -153,8 +180,8 @@ function showChats() {
         }
     }
 
-    // calling function to show messages section.
-    showMessages();
+    // calling function to show the messages section header and the send button.
+    showMssgsSectionBtnsAndHeader();
     
 
 }
@@ -218,7 +245,7 @@ async function getSelectedContantInfo(contactId) {
     })
 }
 
-function showMessages() {
+function showMssgsSectionBtnsAndHeader() {
     // displaying contact image and name at the top of the messages section.
     const messagesHeader = _(".message-section-header");
 
@@ -236,24 +263,13 @@ function showMessages() {
         `;
     }
 
-    // SHOW MESSAGES.
-
-    const messagesWrapper = _(".messages-wrapper");
-
-    // check if contact has an image name in db.
-    if (current_chat_user.img) {
-        messagesWrapper.innerHTML = message_left_with_pic() + message_right();
-    } else {
-        // if contact doesnt have a profile pic name, a default image will be displayed.
-        messagesWrapper.innerHTML = message_left_with_no_pic() + message_right() + message_right();
-    }
 
     // SHOW TEXT BOX AND SEND MESSAGE BUTTON.
     const btnWrapper = _(".messages-btns-wrapper");
 
     // if theres a contact selected the buttons will showup, otherwise it'd make no sense.
     if (current_chat_user) {
-        btnWrapper.style.background= "#1e8f60"
+        // btnWrapper.style.background= "#1e8f60"
         btnWrapper.innerHTML = `
             <div class="messages-btns-wrap">
                 <label for="attach-file"><img class="clip-img" src="./chat_pics/ui/icons/clip.png"></label>
@@ -267,46 +283,60 @@ function showMessages() {
     
 }
 
-// templates for messages display.
-function message_right() {
+// TEMPLATES FOR MESSAGES FOR WHEN THEY WILL BE DISPLAYED.
+function message_right(mssg) {
     return `
         <div class="message-right">
             <div></div>
             <img src="../../backend/chat_backend/uploads/${userInfo.img}">
             <b>${userInfo.username}</b>
             <br>
-            This is a test message
+            ${mssg.message}
             <br>
-            <span style="color: #999; font-size:11px;">08 Jan 2025 03:00AM</span>
+            <span style="color: #999; font-size:11px;">${mssg.date}</span>
+        </div>
+    `;
+}
+
+function message_right_with_no_pic(mssg) {
+    return `
+        <div class="message-right">
+            <div></div>
+            <img src="${userInfo.gender === "male" ? "./chat_pics/ui/images/male.jpeg" : "./chat_pics/ui/images/female.jpeg"}">
+            <b>${userInfo.username}</b>
+            <br>
+            ${mssg.message}
+            <br>
+            <span style="color: #999; font-size:11px;">${mssg.date}</span>
         </div>
     `;
 }
 
 
-function message_left_with_pic() {
+function message_left_with_pic(mssg) {
     return `
         <div class="message-left">
             <div></div>
             <img src="../../backend/chat_backend/uploads/${current_chat_user.img}">
             <b>${current_chat_user.username}</b>
             <br>
-            This is a test message
+            ${mssg.message}
             <br>
-            <span style="color: #999; font-size:11px;">08 Jan 2025 03:00AM</span>
+            <span style="color: #999; font-size:11px;">${mssg.date}</span>
         </div>
     `;
 }
 
-function message_left_with_no_pic() {
+function message_left_with_no_pic(mssg) {
     return `
         <div class="message-left">
             <div></div>
             <img src="${current_chat_user.gender === "male" ? "./chat_pics/ui/images/male.jpeg" : "./chat_pics/ui/images/female.jpeg"}">
             <b>${current_chat_user.username}</b>
             <br>
-            This is a test message
+            ${mssg.message}
             <br>
-            <span style="color: #999; font-size:11px;">08 Jan 2025 03:00AM</span>
+            <span style="color: #999; font-size:11px;">${mssg.date}</span>
         </div>
     `;
 }
@@ -339,7 +369,8 @@ async function send_message(){
         "receiver" : current_chat_user.id
     };
 
-    // checking for already existing message id.
+    // checking for already existing message id. if there's a mssgid already we wanna make sure all message 
+    // sent from this contact to the other to have the same mssgid.
     const flag = await get_message_id(userInfo.id, current_chat_user.id);
     if (flag) {
         messageInfo.mssgid = flag;
@@ -360,6 +391,13 @@ async function send_message(){
         if (data.success) {
             console.log("Message: ",data.result, "!!");
             console.log("Message saved");
+
+            // clering text message input.
+            const textMessageInput = document.querySelector('.message-box');
+            textMessageInput.value = "";
+
+            // when a message is sent, messages will be automatically updated
+            await displayMessages();
         } else {
             console.log(data.error);
         }
@@ -441,9 +479,8 @@ async function get_messages() {
             return data.messages;
         } else if (data.empty) {
             console.log("No messages were found");
-            console.log(data.sender);
-            console.log(data.receiver);
-            return "No messages were found";
+            console.log("sender id:", data.sender);
+            console.log("receiver id:", data.receiver);
         } else {
             console.log(data.error);
         }
@@ -453,9 +490,58 @@ async function get_messages() {
 }
 
 async function displayMessages() {
+    // getting all messages.
     let allMessages = await get_messages();
 
-    console.log(allMessages);
+    // CODE TO DISPLAY MESSAGES IN MESSAGE AREA, IF ANY WERE FOUND.
+
+    // grabbing and clearing message area.
+    const mssgArea = _(".messages-wrapper");
+    mssgArea.innerHTML = " ";
+
+    // checking for messages, fi any they will be print out.
+    if (allMessages) {
+        //printing out messages in console
+        allMessages.forEach(mssg => console.log(mssg));
+        
+        // visually showing messages making use of the message_right funtion.
+        allMessages.forEach(mssg => {
+            const mssgWrap = document.createElement("div");
+            mssgWrap.classList.add("mssgWrap");
+
+            // if the id of the message matches the current user id it means this message must be on the right
+            // hand side so we call the message_right function
+            if (mssg.sender === userInfo.id) {
+                // if the current user has a profile pic name so its null we will call the message_right function
+                // other wise we call the message_right_with_no_pic to show the default profile pics.
+                if (userInfo.img) {
+                    mssgWrap.innerHTML = message_right(mssg);
+                } else {
+                    mssgWrap.innerHTML = message_right_with_no_pic(mssg);
+                }
+
+                
+            } else {
+                if (current_chat_user.img) {
+                    mssgWrap.innerHTML = message_left_with_pic(mssg);
+                } else {
+                    mssgWrap.innerHTML = message_left_with_no_pic(mssg);
+                }
+                
+            }
+
+            
+
+            mssgArea.appendChild(mssgWrap);
+        });
+    } else {
+        mssgArea.innerHTML = `
+            <div style="font-size:1.5rem"; font-weight:500;>
+                No messages here yet
+            </div>
+        `;
+        console.log("No messages for this contact");   
+    }
 }
 
 // function to generate random string.
@@ -742,25 +828,6 @@ async function saveImage(picName) {
         console.error(error);
     }
 }
-
-// UPDATING PROFILE PICTURE IN LEFT PANEL.
-
-updatePicProfile();
-
-async function updatePicProfile() {
-
-
-    await getUserInfo();
-
-    const picWrapper = _(".profile-pic-wrapper");
-
-    picWrapper.innerHTML = `
-        <img class="profile-img" src="../../backend/chat_backend/uploads/${userInfo["img"] ? userInfo["img"] : "male.jpg"}" alt="profile pic">
-    `;
-}
-
-// CODE TO START A CHAT.
-
 
 
 

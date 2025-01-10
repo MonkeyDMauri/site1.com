@@ -13,7 +13,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         require_once "../../general/dbh.php";
         require_once "../../general/session.conf.php";
 
-        $query = "SELECT * FROM messages WHERE sender = :sender && receiver = :receiver;";
+        // getting messages from both sides of a conversation.
+        $query = "SELECT * FROM messages WHERE sender = :sender AND receiver = :receiver OR sender = :receiver AND receiver = :sender;";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":sender", $userId);
         $stmt->bindParam(":receiver", $contact_id);
@@ -21,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         
 
         // fetching result.
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         // verifying if data was actually retreived so we can send a proper response to promise.
 

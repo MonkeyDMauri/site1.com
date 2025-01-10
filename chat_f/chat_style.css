@@ -396,7 +396,7 @@ this CSS right here hide chat section*/
 }
 
 .messages-btns-wrapper {
-    /* background-color: #1e8f60; */
+    background-color: #8b8a8a;
     min-height: 35px;
     display: flex;
     gap: 2rem;
@@ -416,12 +416,13 @@ this CSS right here hide chat section*/
 }
 
 .send-mssg-btn {
-    font-size: 1.5rem;
+    font-size: 2rem;
     padding: 0 .5rem;
     border-radius: .5rem;
     border: none;
     background-color: blue;
     color: white;
+    cursor: pointer;
 }
 
 .clip-img {

@@ -67,6 +67,7 @@ if (!isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] !== true) {
                     </div>
                     <div class="messages-wrapper">
                         <!-- messages go here -->
+                         <h3>Nothing to show here</h3>
                     </div> 
                     <div class="messages-btns-wrapper">
                         <!-- box to type message and send messages go here -->
