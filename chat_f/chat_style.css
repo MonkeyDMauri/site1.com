@@ -329,6 +329,12 @@ this CSS right here hide chat section*/
     overflow-y: auto;
 }
 
+/* .mssg {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+} */
+
 .message-left {
     height: 70px;
     width: 70%;
@@ -344,6 +350,8 @@ this CSS right here hide chat section*/
     position: relative;
 }
 
+
+
 .message-left img {
     width: 50px;
     height: 50px;
@@ -352,7 +360,7 @@ this CSS right here hide chat section*/
     float: left;
 }
 
-.message-left div {
+.message-left span {
     position: absolute;
     top: 15px;
     left: -10px;
@@ -385,7 +393,7 @@ this CSS right here hide chat section*/
     float: right;
 }
 
-.message-right div {
+.message-right span {
     position: absolute;
     top: 15px;
     right: -10px;

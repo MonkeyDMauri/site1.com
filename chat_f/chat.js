@@ -286,28 +286,28 @@ function showMssgsSectionBtnsAndHeader() {
 // TEMPLATES FOR MESSAGES FOR WHEN THEY WILL BE DISPLAYED.
 function message_right(mssg) {
     return `
-        <div class="message-right">
-            <div></div>
+        <div class="message-right mssg">
+            <span></span>
             <img src="../../backend/chat_backend/uploads/${userInfo.img}">
             <b>${userInfo.username}</b>
             <br>
-            ${mssg.message}
-            <br>
-            <span style="color: #999; font-size:11px;">${mssg.date}</span>
+            <div style="font-size:1rem;">${mssg.message}</div>
+  
+            <div style="color: #999; font-size:11px;">${mssg.date}</div>
         </div>
     `;
 }
 
 function message_right_with_no_pic(mssg) {
     return `
-        <div class="message-right">
-            <div></div>
+        <div class="message-right mssg">
+            <span></span>
             <img src="${userInfo.gender === "male" ? "./chat_pics/ui/images/male.jpeg" : "./chat_pics/ui/images/female.jpeg"}">
             <b>${userInfo.username}</b>
             <br>
-            ${mssg.message}
-            <br>
-            <span style="color: #999; font-size:11px;">${mssg.date}</span>
+            <div style="font-size:1rem;">${mssg.message}</div>
+            
+            <div style="color: #999; font-size:11px;">${mssg.date}</div
         </div>
     `;
 }
@@ -315,28 +315,28 @@ function message_right_with_no_pic(mssg) {
 
 function message_left_with_pic(mssg) {
     return `
-        <div class="message-left">
-            <div></div>
+        <div class="message-left mssg">
+            <span></span>
             <img src="../../backend/chat_backend/uploads/${current_chat_user.img}">
             <b>${current_chat_user.username}</b>
             <br>
-            ${mssg.message}
-            <br>
-            <span style="color: #999; font-size:11px;">${mssg.date}</span>
+            <div style="font-size:1rem;">${mssg.message}</div>
+            
+            <div style="color: #999; font-size:11px;">${mssg.date}</div>
         </div>
     `;
 }
 
 function message_left_with_no_pic(mssg) {
     return `
-        <div class="message-left">
-            <div></div>
+        <div class="message-left mssg">
+            <span></span>
             <img src="${current_chat_user.gender === "male" ? "./chat_pics/ui/images/male.jpeg" : "./chat_pics/ui/images/female.jpeg"}">
             <b>${current_chat_user.username}</b>
             <br>
-            ${mssg.message}
-            <br>
-            <span style="color: #999; font-size:11px;">${mssg.date}</span>
+            <div style="font-size:1rem;">${mssg.message}</div>
+          
+            <div style="color: #999; font-size:11px;">${mssg.date}</div>
         </div>
     `;
 }
